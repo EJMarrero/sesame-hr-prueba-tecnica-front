@@ -25,7 +25,7 @@ const emit = defineEmits<{
         :class="[
           'py-3 text-sm font-medium border-b-2 transition-colors',
           activeTab === tab.id
-            ? 'text-blue-600 border-blue-600'
+            ? 'text-sesame-primary border-sesame-primary'
             : 'text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300',
         ]"
       >

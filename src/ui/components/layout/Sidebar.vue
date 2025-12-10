@@ -35,7 +35,7 @@ import { ChevronDownIcon, StarIcon } from '@heroicons/vue/24/outline'
         <div class="ml-4 mt-1">
           <a
             href="#"
-            class="block py-2 px-2 text-sm text-blue-600 bg-blue-50 rounded-lg font-medium"
+            class="block py-2 px-2 text-sm text-sesame-primary bg-sesame-primary/10 rounded-lg font-medium"
           >
             Reclutamiento
           </a>
