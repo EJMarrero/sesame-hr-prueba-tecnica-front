@@ -1,7 +1,7 @@
 export interface CandidateStatus {
   id: string
   name: string
-  color: string
+  color?: string
   order: number
 }
 

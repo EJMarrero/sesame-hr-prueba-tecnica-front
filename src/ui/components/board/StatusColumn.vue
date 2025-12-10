@@ -21,36 +21,25 @@ const emit = defineEmits<{
   'candidate-moved': [candidateId: string, newStatusId: string]
 }>()
 
-const statusIcon = computed(() => {
+// Mapeo de estados (nombres de la API) a configuración visual
+const statusConfig: Record<string, { icon: typeof EnvelopeIcon; color: string; textColor: string }> = {
+  'nuevo': { icon: EnvelopeIcon, color: 'bg-green-500', textColor: 'text-green-500' },
+  'en proceso': { icon: UserIcon, color: 'bg-blue-500', textColor: 'text-blue-500' },
+  'oferta': { icon: SparklesIcon, color: 'bg-purple-500', textColor: 'text-purple-500' },
+  'seleccionado': { icon: SparklesIcon, color: 'bg-emerald-500', textColor: 'text-emerald-500' },
+  'descartado': { icon: NoSymbolIcon, color: 'bg-red-500', textColor: 'text-red-500' },
+}
+
+const defaultConfig = { icon: EnvelopeIcon, color: 'bg-gray-400', textColor: 'text-gray-400' }
+
+const currentConfig = computed(() => {
   const name = props.status.name.toLowerCase()
-  if (name.includes('new') || name.includes('nuev')) return EnvelopeIcon
-  if (name.includes('interview') || name.includes('entrevista')) return UserIcon
-  if (name.includes('hired') || name.includes('contratad')) return SparklesIcon
-  if (name.includes('not') || name.includes('no ') || name.includes('rechaz')) return NoSymbolIcon
-  return EnvelopeIcon
+  return statusConfig[name] || defaultConfig
 })
 
-const statusColor = computed(() => {
-  const color = props.status.color?.toLowerCase() || ''
-  if (color.includes('green') || color === '#22c55e' || color === '#10b981') return 'bg-green-500'
-  if (color.includes('blue') || color === '#3b82f6' || color === '#0ea5e9') return 'bg-blue-500'
-  if (color.includes('purple') || color === '#8b5cf6' || color === '#a855f7') return 'bg-purple-500'
-  if (color.includes('red') || color === '#ef4444' || color === '#f43f5e') return 'bg-red-500'
-  if (color.includes('yellow') || color === '#eab308') return 'bg-yellow-500'
-  if (color.includes('orange') || color === '#f97316') return 'bg-orange-500'
-  return 'bg-gray-400'
-})
-
-const iconColorClass = computed(() => {
-  const color = props.status.color?.toLowerCase() || ''
-  if (color.includes('green') || color === '#22c55e' || color === '#10b981') return 'text-green-500'
-  if (color.includes('blue') || color === '#3b82f6' || color === '#0ea5e9') return 'text-blue-500'
-  if (color.includes('purple') || color === '#8b5cf6' || color === '#a855f7') return 'text-purple-500'
-  if (color.includes('red') || color === '#ef4444' || color === '#f43f5e') return 'text-red-500'
-  if (color.includes('yellow') || color === '#eab308') return 'text-yellow-500'
-  if (color.includes('orange') || color === '#f97316') return 'text-orange-500'
-  return 'text-gray-400'
-})
+const statusIcon = computed(() => currentConfig.value.icon)
+const statusColor = computed(() => currentConfig.value.color)
+const iconColorClass = computed(() => currentConfig.value.textColor)
 
 const localCandidates = computed({
   get: () => props.candidates,
