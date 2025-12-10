@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useVacancyStore } from '@application/stores/vacancyStore'
+import type { Candidate } from '@domain/models/Candidate'
 import MainLayout from '@ui/layouts/MainLayout.vue'
 import Header from '@ui/components/layout/Header.vue'
 import TabBar from '@ui/components/layout/TabBar.vue'
@@ -13,6 +14,24 @@ import CandidatesView from './CandidatesView.vue'
 
 const store = useVacancyStore()
 const { statuses, candidatesByStatus, isLoading, error } = storeToRefs(store)
+
+// Filtrar candidatos por nombre
+const filteredCandidatesByStatus = computed(() => {
+  const query = searchQuery.value.toLowerCase().trim()
+  if (!query) return candidatesByStatus.value
+
+  const filtered: Record<string, Candidate[]> = {}
+  for (const statusId in candidatesByStatus.value) {
+    const candidates = candidatesByStatus.value[statusId]
+    if (candidates) {
+      filtered[statusId] = candidates.filter((candidate) => {
+        const fullName = `${candidate.firstName} ${candidate.lastName}`.toLowerCase()
+        return fullName.includes(query)
+      })
+    }
+  }
+  return filtered
+})
 
 const tabs = [
   { id: 'vacantes', label: 'Vacantes' },
@@ -87,10 +106,10 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
           <KanbanBoard
             v-if="activeTab === 'vacantes'"
             :statuses="statuses"
-            :candidates-by-status="candidatesByStatus"
+            :candidates-by-status="filteredCandidatesByStatus"
             @candidate-moved="handleCandidateMoved"
           />
-          <CandidatesView v-else-if="activeTab === 'candidatos'" />
+          <CandidatesView v-else-if="activeTab === 'candidatos'" :search-query="searchQuery" />
         </div>
       </div>
 

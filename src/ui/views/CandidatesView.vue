@@ -1,9 +1,27 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useVacancyStore } from '@application/stores/vacancyStore'
 
+interface Props {
+  searchQuery?: string
+}
+
+const props = defineProps<Props>()
+
 const store = useVacancyStore()
 const { statuses, candidates, isLoading } = storeToRefs(store)
+
+// Filtrar candidatos por nombre
+const filteredCandidates = computed(() => {
+  const query = (props.searchQuery || '').toLowerCase().trim()
+  if (!query) return candidates.value
+
+  return candidates.value.filter((candidate) => {
+    const fullName = `${candidate.firstName} ${candidate.lastName}`.toLowerCase()
+    return fullName.includes(query)
+  })
+})
 
 function getStatusName(statusId: string): string {
   const status = statuses.value.find(s => s.id === statusId)
@@ -20,8 +38,8 @@ function formatDate(dateString: string): string {
     <div v-if="isLoading" class="text-center py-12 text-gray-500">
       Cargando candidatos...
     </div>
-    <div v-else-if="candidates.length === 0" class="text-center py-12 text-gray-500">
-      No hay candidatos registrados
+    <div v-else-if="filteredCandidates.length === 0" class="text-center py-12 text-gray-500">
+      {{ searchQuery ? 'No se encontraron candidatos' : 'No hay candidatos registrados' }}
     </div>
     <div v-else class="bg-white rounded-lg border border-gray-200 overflow-hidden">
       <table class="min-w-full divide-y divide-gray-200">
@@ -39,7 +57,7 @@ function formatDate(dateString: string): string {
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="candidate in candidates" :key="candidate.id" class="hover:bg-gray-50">
+          <tr v-for="candidate in filteredCandidates" :key="candidate.id" class="hover:bg-gray-50">
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm font-medium text-gray-900">
                 {{ candidate.firstName }} {{ candidate.lastName }}
