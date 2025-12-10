@@ -8,6 +8,7 @@ import Header from '@ui/components/layout/Header.vue'
 import TabBar from '@ui/components/layout/TabBar.vue'
 import SearchBar from '@ui/components/layout/SearchBar.vue'
 import Button from '@ui/components/common/Button.vue'
+import ContentCard from '@ui/components/common/ContentCard.vue'
 import KanbanBoard from '@ui/components/board/KanbanBoard.vue'
 import CandidateForm from '@ui/components/forms/CandidateForm.vue'
 import CandidatesView from './CandidatesView.vue'
@@ -66,8 +67,7 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
     <div class="max-w-full">
       <Header title="Reclutamiento" />
 
-      <!-- Card contenedora principal -->
-      <div class="mt-0 bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
+      <ContentCard>
         <!-- Tabs -->
         <div class="px-6 pt-3">
           <TabBar :tabs="tabs" :active-tab="activeTab" @update:active-tab="activeTab = $event" />
@@ -111,7 +111,7 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
           />
           <CandidatesView v-else-if="activeTab === 'candidatos'" :search-query="searchQuery" />
         </div>
-      </div>
+      </ContentCard>
 
       <!-- Add candidate form -->
       <CandidateForm

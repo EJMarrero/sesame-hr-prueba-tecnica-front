@@ -5,7 +5,7 @@ import Sidebar from '@ui/components/layout/Sidebar.vue'
 <template>
   <div class="flex min-h-screen bg-gray-50">
     <Sidebar />
-    <main class="flex-1 p-6">
+    <main class="flex-1 px-6 pt-4">
       <slot />
     </main>
   </div>

@@ -115,7 +115,7 @@ src/
 │   └── stores/       # Estado global con Pinia
 └── ui/               # Capa de Presentación
     ├── components/   # Componentes Vue (board/, common/, forms/, layout/)
-    └── views/        # Vistas (VacancyView, CandidatesView)
+    └── views/        # Vistas (RecruitmentView, CandidatesView)
 ```
 
 ## Arquitectura
@@ -178,9 +178,9 @@ export const apiConfig = {
 
 | Documento | Descripción |
 |-----------|-------------|
-| [DOCUMENTACION.md](./DOCUMENTACION.md) | Documentación técnica completa |
-| [ANALISIS_DOMINIO.md](./ANALISIS_DOMINIO.md) | Análisis del dominio y decisiones |
-| [PRUEBAS_API.md](./PRUEBAS_API.md) | Pruebas de endpoints y hallazgos |
+| [docs/DOCUMENTACION.md](./docs/DOCUMENTACION.md) | Documentación técnica completa |
+| [docs/ANALISIS_DOMINIO.md](./docs/ANALISIS_DOMINIO.md) | Análisis del dominio y decisiones |
+| [docs/PRUEBAS_API.md](./docs/PRUEBAS_API.md) | Pruebas de endpoints y hallazgos |
 
 ## Notas de Desarrollo
 

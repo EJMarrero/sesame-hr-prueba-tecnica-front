@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { ChevronDownIcon, StarIcon } from '@heroicons/vue/24/outline'
 
 const isAdminOpen = ref(true)
-const isTalentoOpen = ref(true)
+const isTalentOpen = ref(true)
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const isTalentoOpen = ref(true)
         <!-- Talento card con sombreado gris -->
         <div class="bg-gray-50 rounded-xl p-3 ml-2">
           <button
-            @click="isTalentoOpen = !isTalentoOpen"
+            @click="isTalentOpen = !isTalentOpen"
             class="flex items-center justify-between w-full py-2 text-left text-sm px-2"
           >
             <div class="flex items-center gap-2">
@@ -45,12 +45,12 @@ const isTalentoOpen = ref(true)
             </div>
             <ChevronDownIcon
               class="w-4 h-4 text-sesame-primary transition-transform"
-              :class="{ 'rotate-180': !isTalentoOpen }"
+              :class="{ 'rotate-180': !isTalentOpen }"
             />
           </button>
 
           <!-- Reclutamiento link con barra vertical -->
-          <div v-show="isTalentoOpen" class="ml-4 mt-1 flex items-center gap-0">
+          <div v-show="isTalentOpen" class="ml-4 mt-1 flex items-center gap-0">
             <div class="w-0.5 h-6 bg-sesame-primary rounded-full" />
             <a
               href="#"

@@ -64,7 +64,7 @@ function onChange(evt: ChangeEvent) {
 </script>
 
 <template>
-  <div class="flex flex-col bg-white rounded-2xl border border-gray-200 min-w-[280px] max-w-[280px]">
+  <div class="status-column flex flex-col rounded-2xl border border-gray-200 min-w-[280px] max-w-[280px] transition-colors">
     <!-- Color bar (dentro de la card, con márgenes) -->
     <div class="mx-4 mt-4">
       <div :class="['h-1 rounded-full', statusColor]" />
@@ -84,7 +84,7 @@ function onChange(evt: ChangeEvent) {
       :animation="200"
       ghost-class="sortable-ghost"
       drag-class="rotate-2"
-      class="drop-zone flex-1 px-3 pb-3 space-y-2 min-h-[200px] overflow-y-auto rounded-xl transition-colors"
+      class="flex-1 px-3 pb-3 space-y-2 min-h-[200px] overflow-y-auto rounded-xl"
       @change="onChange"
     >
       <template #item="{ element }">
@@ -97,8 +97,13 @@ function onChange(evt: ChangeEvent) {
 </template>
 
 <style scoped>
-/* Sombrear la zona de drop cuando un elemento ghost está dentro */
-.drop-zone:has(.sortable-ghost) {
+/* Estado normal: fondo blanco */
+.status-column {
+  background-color: white;
+}
+
+/* Sombrear toda la columna cuando hay un ghost dentro */
+.status-column:has(.sortable-ghost) {
   background-color: rgb(249 250 251); /* bg-gray-50 */
 }
 

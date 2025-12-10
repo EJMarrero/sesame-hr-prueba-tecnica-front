@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import VacancyView from '@ui/views/VacancyView.vue'
+import RecruitmentView from '@ui/views/RecruitmentView.vue'
 </script>
 
 <template>
-  <VacancyView />
+  <RecruitmentView />
 </template>
