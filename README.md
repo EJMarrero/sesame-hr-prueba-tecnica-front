@@ -2,6 +2,8 @@
 
 Aplicación de gestión de candidatos con tablero Kanban, desarrollada con Vue 3, TypeScript y arquitectura hexagonal.
 
+![Demo](demo.png)
+
 ## Requisitos Previos
 
 - **Node.js** >= 18.x
