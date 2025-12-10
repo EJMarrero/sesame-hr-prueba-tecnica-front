@@ -60,6 +60,14 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
     isSubmitting.value = false
   }
 }
+
+async function handleCandidateDeleted(candidateId: string) {
+  try {
+    await store.removeCandidate(candidateId)
+  } catch {
+    // Error ya manejado en el store
+  }
+}
 </script>
 
 <template>
@@ -108,6 +116,7 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
             :statuses="statuses"
             :candidates-by-status="filteredCandidatesByStatus"
             @candidate-moved="handleCandidateMoved"
+            @candidate-deleted="handleCandidateDeleted"
           />
           <CandidatesView v-else-if="activeTab === 'candidatos'" :search-query="searchQuery" />
         </div>
