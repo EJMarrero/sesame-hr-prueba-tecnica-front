@@ -22,12 +22,13 @@ const emit = defineEmits<{
 }>()
 
 // Mapeo de estados (nombres de la API) a configuración visual
+// Colores definidos en @theme (style.css) - extraídos del Figma
 const statusConfig: Record<string, { icon: typeof EnvelopeIcon; color: string; textColor: string }> = {
-  'nuevo': { icon: EnvelopeIcon, color: 'bg-green-500', textColor: 'text-green-500' },
-  'en proceso': { icon: UserIcon, color: 'bg-blue-500', textColor: 'text-blue-500' },
-  'oferta': { icon: SparklesIcon, color: 'bg-purple-500', textColor: 'text-purple-500' },
-  'seleccionado': { icon: SparklesIcon, color: 'bg-emerald-500', textColor: 'text-emerald-500' },
-  'descartado': { icon: NoSymbolIcon, color: 'bg-red-500', textColor: 'text-red-500' },
+  'nuevo': { icon: EnvelopeIcon, color: 'bg-sesame-status-nuevo', textColor: 'text-sesame-status-nuevo' },
+  'en proceso': { icon: UserIcon, color: 'bg-sesame-status-proceso', textColor: 'text-sesame-status-proceso' },
+  'oferta': { icon: SparklesIcon, color: 'bg-sesame-status-oferta', textColor: 'text-sesame-status-oferta' },
+  'seleccionado': { icon: SparklesIcon, color: 'bg-sesame-status-seleccionado', textColor: 'text-sesame-status-seleccionado' },
+  'descartado': { icon: NoSymbolIcon, color: 'bg-sesame-status-descartado', textColor: 'text-sesame-status-descartado' },
 }
 
 const defaultConfig = { icon: EnvelopeIcon, color: 'bg-gray-400', textColor: 'text-gray-400' }

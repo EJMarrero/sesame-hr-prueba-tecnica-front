@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@theme {
+  /* Colores principales de Sesame HR (extraídos del Figma) */
+  --color-sesame-primary: #6C63FF;
+
+  /* Colores de estados del Kanban */
+  --color-sesame-status-nuevo: #22C55F;
+  --color-sesame-status-proceso: #2CB8A6;
+  --color-sesame-status-oferta: #AD46FF;
+  --color-sesame-status-seleccionado: #10B981;
+  --color-sesame-status-descartado: #F82C37;
+}
+
 :root {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
