@@ -115,8 +115,7 @@ src/
 │   └── stores/       # Estado global con Pinia
 └── ui/               # Capa de Presentación
     ├── components/   # Componentes Vue (board/, common/, forms/, layout/)
-    ├── views/        # Vistas principales
-    └── layouts/      # Layouts de la aplicación
+    └── views/        # Vistas (VacancyView, CandidatesView)
 ```
 
 ## Arquitectura
@@ -144,7 +143,10 @@ La aplicación sigue los principios de **Arquitectura Hexagonal** y **SOLID**:
 
 - Visualización de estados en columnas Kanban
 - Crear candidatos mediante formulario modal
-- Drag & drop para mover candidatos entre estados
+- Drag & drop para mover candidatos entre estados (con highlight visual)
+- Vista alternativa de candidatos en formato tabla
+- Búsqueda/filtrado de candidatos por nombre
+- Sidebar colapsable con secciones expandibles
 - Persistencia local (fallback) cuando la API falla
 
 ## Stack Tecnológico
@@ -211,11 +213,11 @@ Como la API no devuelve colores, el frontend los asigna basándose en el nombre 
 
 | Estado | Color | Clase Tailwind |
 |--------|-------|----------------|
-| Nuevo | #22C55F | `bg-sesame-status-nuevo` |
-| En proceso | #2CB8A6 | `bg-sesame-status-proceso` |
-| Oferta | #AD46FF | `bg-sesame-status-oferta` |
-| Seleccionado | #10B981 | `bg-sesame-status-seleccionado` |
-| Descartado | #F82C37 | `bg-sesame-status-descartado` |
+| Nuevo | #22C55F (verde) | `bg-sesame-status-nuevo` |
+| En proceso | #2CB8A6 (turquesa) | `bg-sesame-status-proceso` |
+| Oferta | #3B82F6 (azul) | `bg-sesame-status-oferta` |
+| Seleccionado | #8B5CF6 (violeta) | `bg-sesame-status-seleccionado` |
+| Descartado | #F82C37 (rojo) | `bg-sesame-status-descartado` |
 
 Ver sección "Sistema de Temas" en [DOCUMENTACION.md](./DOCUMENTACION.md).
 

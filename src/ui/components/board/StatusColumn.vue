@@ -64,7 +64,7 @@ function onChange(evt: ChangeEvent) {
 </script>
 
 <template>
-  <div class="flex flex-col bg-white rounded-[20px] border border-gray-200 min-w-[280px] max-w-[280px]">
+  <div class="flex flex-col bg-white rounded-2xl border border-gray-200 min-w-[280px] max-w-[280px]">
     <!-- Color bar (dentro de la card, con márgenes) -->
     <div class="mx-4 mt-4">
       <div :class="['h-1 rounded-full', statusColor]" />
