@@ -9,6 +9,7 @@ import SearchBar from '@ui/components/layout/SearchBar.vue'
 import Button from '@ui/components/common/Button.vue'
 import KanbanBoard from '@ui/components/board/KanbanBoard.vue'
 import CandidateForm from '@ui/components/forms/CandidateForm.vue'
+import CandidatesView from './CandidatesView.vue'
 
 const store = useVacancyStore()
 const { statuses, candidatesByStatus, isLoading, error } = storeToRefs(store)
@@ -27,11 +28,7 @@ onMounted(async () => {
 })
 
 async function handleCandidateMoved(candidateId: string, newStatusId: string) {
-  try {
-    await store.moveCandidateToStatus(candidateId, newStatusId)
-  } catch (e) {
-    console.error('Error moving candidate:', e)
-  }
+  await store.moveCandidateToStatus(candidateId, newStatusId)
 }
 
 async function handleAddCandidate(data: { firstName: string; lastName: string; statusId: string }) {
@@ -39,8 +36,6 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
   try {
     await store.addCandidate(data)
     isFormOpen.value = false
-  } catch (e) {
-    console.error('Error adding candidate:', e)
   } finally {
     isSubmitting.value = false
   }
@@ -79,14 +74,17 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
         </Button>
       </div>
 
-      <!-- Kanban board -->
-      <div v-else class="mt-6">
+      <!-- Tab content -->
+      <template v-else>
         <KanbanBoard
+          v-if="activeTab === 'vacantes'"
           :statuses="statuses"
           :candidates-by-status="candidatesByStatus"
+          class="mt-6"
           @candidate-moved="handleCandidateMoved"
         />
-      </div>
+        <CandidatesView v-else-if="activeTab === 'candidatos'" />
+      </template>
 
       <!-- Add candidate form -->
       <CandidateForm
