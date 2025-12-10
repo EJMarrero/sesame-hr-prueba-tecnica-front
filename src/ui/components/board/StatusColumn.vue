@@ -19,6 +19,7 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits<{
   'candidate-moved': [candidateId: string, newStatusId: string]
+  'candidate-deleted': [candidateId: string]
 }>()
 
 // Mapeo de estados (nombres de la API) a configuración visual
@@ -89,7 +90,10 @@ function onChange(evt: ChangeEvent) {
     >
       <template #item="{ element }">
         <div :data-id="element.id">
-          <CandidateCard :candidate="element" />
+          <CandidateCard
+            :candidate="element"
+            @delete="(id) => emit('candidate-deleted', id)"
+          />
         </div>
       </template>
     </draggable>

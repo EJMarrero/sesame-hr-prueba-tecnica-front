@@ -8,6 +8,7 @@ import { GetCandidates } from '@application/useCases/GetCandidates'
 import { GetCandidateStatuses } from '@application/useCases/GetCandidateStatuses'
 import { CreateCandidate } from '@application/useCases/CreateCandidate'
 import { UpdateCandidateStatus } from '@application/useCases/UpdateCandidateStatus'
+import { DeleteCandidate } from '@application/useCases/DeleteCandidate'
 import { apiConfig } from '@infrastructure/config/api.config'
 
 const candidateRepository = new CandidateApiRepository()
@@ -17,12 +18,14 @@ const getCandidatesUseCase = new GetCandidates(candidateRepository)
 const getStatusesUseCase = new GetCandidateStatuses(statusRepository)
 const createCandidateUseCase = new CreateCandidate(candidateRepository)
 const updateCandidateStatusUseCase = new UpdateCandidateStatus(candidateRepository)
+const deleteCandidateUseCase = new DeleteCandidate(candidateRepository)
 
-const LOCAL_STORAGE_KEY = 'sesame_candidate_status_overrides'
+const LOCAL_STORAGE_STATUS_KEY = 'sesame_candidate_status_overrides'
+const LOCAL_STORAGE_DELETED_KEY = 'sesame_candidate_deleted'
 
 function getLocalStatusOverrides(): Record<string, string> {
   try {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
+    const stored = localStorage.getItem(LOCAL_STORAGE_STATUS_KEY)
     return stored ? JSON.parse(stored) : {}
   } catch {
     return {}
@@ -32,18 +35,39 @@ function getLocalStatusOverrides(): Record<string, string> {
 function saveLocalStatusOverride(candidateId: string, statusId: string) {
   const overrides = getLocalStatusOverrides()
   overrides[candidateId] = statusId
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(overrides))
+  localStorage.setItem(LOCAL_STORAGE_STATUS_KEY, JSON.stringify(overrides))
+}
+
+function getLocalDeletedCandidates(): string[] {
+  try {
+    const stored = localStorage.getItem(LOCAL_STORAGE_DELETED_KEY)
+    return stored ? JSON.parse(stored) : []
+  } catch {
+    return []
+  }
+}
+
+function saveLocalDeletedCandidate(candidateId: string) {
+  const deleted = getLocalDeletedCandidates()
+  if (!deleted.includes(candidateId)) {
+    deleted.push(candidateId)
+    localStorage.setItem(LOCAL_STORAGE_DELETED_KEY, JSON.stringify(deleted))
+  }
 }
 
 function applyLocalOverrides(candidates: Candidate[]): Candidate[] {
-  const overrides = getLocalStatusOverrides()
-  return candidates.map((candidate) => {
-    const overrideStatusId = overrides[candidate.id]
-    if (overrideStatusId) {
-      return { ...candidate, statusId: overrideStatusId }
-    }
-    return candidate
-  })
+  const statusOverrides = getLocalStatusOverrides()
+  const deletedIds = getLocalDeletedCandidates()
+
+  return candidates
+    .filter((candidate) => !deletedIds.includes(candidate.id))
+    .map((candidate) => {
+      const overrideStatusId = statusOverrides[candidate.id]
+      if (overrideStatusId) {
+        return { ...candidate, statusId: overrideStatusId }
+      }
+      return candidate
+    })
 }
 
 export const useVacancyStore = defineStore('vacancy', () => {
@@ -129,6 +153,27 @@ export const useVacancyStore = defineStore('vacancy', () => {
     }
   }
 
+  async function removeCandidate(candidateId: string) {
+    const index = candidates.value.findIndex((c) => c.id === candidateId)
+    if (index === -1) return
+
+    // Guardamos el candidato por si hay que hacer rollback
+    const removedCandidate = candidates.value[index]
+    if (!removedCandidate) return
+
+    // Optimistic update
+    candidates.value.splice(index, 1)
+
+    try {
+      await deleteCandidateUseCase.execute(candidateId)
+    } catch {
+      // API falló (405) - guardar en localStorage como fallback
+      console.warn('API DELETE falló, guardando eliminación en localStorage')
+      saveLocalDeletedCandidate(candidateId)
+      // NO hacemos rollback - mantenemos el cambio en Pinia y localStorage
+    }
+  }
+
   return {
     candidates,
     statuses,
@@ -138,5 +183,6 @@ export const useVacancyStore = defineStore('vacancy', () => {
     loadAll,
     addCandidate,
     moveCandidateToStatus,
+    removeCandidate,
   }
 })
