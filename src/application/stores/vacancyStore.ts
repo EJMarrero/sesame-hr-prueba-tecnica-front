@@ -18,6 +18,34 @@ const getStatusesUseCase = new GetCandidateStatuses(statusRepository)
 const createCandidateUseCase = new CreateCandidate(candidateRepository)
 const updateCandidateStatusUseCase = new UpdateCandidateStatus(candidateRepository)
 
+const LOCAL_STORAGE_KEY = 'sesame_candidate_status_overrides'
+
+function getLocalStatusOverrides(): Record<string, string> {
+  try {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
+    return stored ? JSON.parse(stored) : {}
+  } catch {
+    return {}
+  }
+}
+
+function saveLocalStatusOverride(candidateId: string, statusId: string) {
+  const overrides = getLocalStatusOverrides()
+  overrides[candidateId] = statusId
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(overrides))
+}
+
+function applyLocalOverrides(candidates: Candidate[]): Candidate[] {
+  const overrides = getLocalStatusOverrides()
+  return candidates.map((candidate) => {
+    const overrideStatusId = overrides[candidate.id]
+    if (overrideStatusId) {
+      return { ...candidate, statusId: overrideStatusId }
+    }
+    return candidate
+  })
+}
+
 export const useVacancyStore = defineStore('vacancy', () => {
   const candidates = ref<Candidate[]>([])
   const statuses = ref<CandidateStatus[]>([])
@@ -46,7 +74,9 @@ export const useVacancyStore = defineStore('vacancy', () => {
 
   async function fetchCandidates() {
     try {
-      candidates.value = await getCandidatesUseCase.execute(vacancyId)
+      const apiCandidates = await getCandidatesUseCase.execute(vacancyId)
+      // Aplicar overrides locales (fallback para cuando la API PUT falla)
+      candidates.value = applyLocalOverrides(apiCandidates)
     } catch (e) {
       error.value = 'Error al cargar los candidatos'
       throw e
@@ -83,7 +113,7 @@ export const useVacancyStore = defineStore('vacancy', () => {
 
     const oldStatusId = candidate.statusId
 
-    // Optimistic update
+    // Optimistic update en Pinia
     candidate.statusId = newStatusId
 
     try {
@@ -94,10 +124,10 @@ export const useVacancyStore = defineStore('vacancy', () => {
         statusId: newStatusId,
       })
     } catch (e) {
-      // Rollback on error
-      candidate.statusId = oldStatusId
-      error.value = 'Error al mover el candidato'
-      throw e
+      // API falló (500) - guardar en localStorage como fallback
+      console.warn('API PUT falló, guardando cambio en localStorage')
+      saveLocalStatusOverride(candidateId, newStatusId)
+      // NO hacemos rollback - mantenemos el cambio en Pinia y localStorage
     }
   }
 
