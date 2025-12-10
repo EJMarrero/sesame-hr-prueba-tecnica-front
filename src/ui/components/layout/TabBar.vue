@@ -16,7 +16,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="border-b border-gray-200">
+  <div class="ml-6 border-b border-gray-200">
     <nav class="flex gap-6">
       <button
         v-for="tab in tabs"

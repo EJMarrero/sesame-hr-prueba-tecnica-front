@@ -26,7 +26,7 @@ const createdAtFormatted = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg border border-gray-200 p-3 shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing">
+  <div class="bg-gray-50 rounded-xl border border-gray-200 p-3 shadow-sm hover:shadow-md transition-shadow cursor-grab active:cursor-grabbing">
     <div class="flex items-start justify-between gap-2">
       <h4 class="text-sm font-medium text-gray-900 truncate flex-1" :title="fullName">
         {{ fullName }}

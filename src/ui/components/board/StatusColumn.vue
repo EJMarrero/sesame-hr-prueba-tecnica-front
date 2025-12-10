@@ -64,12 +64,14 @@ function onChange(evt: ChangeEvent) {
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-100 rounded-lg min-w-[280px] max-w-[280px]">
-    <!-- Color bar -->
-    <div :class="['h-1 rounded-t-lg', statusColor]" />
+  <div class="flex flex-col bg-white rounded-2xl border border-gray-200 min-w-[280px] max-w-[280px]">
+    <!-- Color bar (dentro de la card, con márgenes) -->
+    <div class="mx-4 mt-4">
+      <div :class="['h-1 rounded-full', statusColor]" />
+    </div>
 
     <!-- Header -->
-    <div class="flex items-center gap-2 p-3 border-b border-gray-200">
+    <div class="flex items-center gap-2 px-4 pt-3 pb-4">
       <component :is="statusIcon" :class="['w-5 h-5', iconColorClass]" />
       <h3 class="text-sm font-semibold text-gray-900">{{ status.name }}</h3>
     </div>
@@ -80,9 +82,9 @@ function onChange(evt: ChangeEvent) {
       group="candidates"
       item-key="id"
       :animation="200"
-      ghost-class="opacity-50"
+      ghost-class="sortable-ghost"
       drag-class="rotate-2"
-      class="flex-1 p-2 space-y-2 min-h-[200px] overflow-y-auto"
+      class="drop-zone flex-1 px-3 pb-3 space-y-2 min-h-[200px] overflow-y-auto rounded-xl transition-colors"
       @change="onChange"
     >
       <template #item="{ element }">
@@ -93,3 +95,15 @@ function onChange(evt: ChangeEvent) {
     </draggable>
   </div>
 </template>
+
+<style scoped>
+/* Sombrear la zona de drop cuando un elemento ghost está dentro */
+.drop-zone:has(.sortable-ghost) {
+  background-color: rgb(249 250 251); /* bg-gray-50 */
+}
+
+/* Estilo del elemento ghost (placeholder) */
+:deep(.sortable-ghost) {
+  opacity: 0.5;
+}
+</style>
