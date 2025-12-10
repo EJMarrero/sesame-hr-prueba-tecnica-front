@@ -4,4 +4,5 @@ export interface CandidateRepository {
   getByVacancyId(vacancyId: string): Promise<Candidate[]>
   create(data: CreateCandidateDTO): Promise<Candidate>
   update(candidateId: string, data: UpdateCandidateDTO): Promise<Candidate>
+  delete(candidateId: string): Promise<void>
 }

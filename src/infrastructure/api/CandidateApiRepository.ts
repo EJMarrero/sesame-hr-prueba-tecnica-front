@@ -25,4 +25,8 @@ export class CandidateApiRepository implements CandidateRepository {
     )
     return response.data.data
   }
+
+  async delete(candidateId: string): Promise<void> {
+    await httpClient.delete(`/recruitment/v1/candidates/${candidateId}`)
+  }
 }

@@ -11,10 +11,15 @@ interface Props {
 defineProps<Props>()
 const emit = defineEmits<{
   'candidate-moved': [candidateId: string, newStatusId: string]
+  'candidate-deleted': [candidateId: string]
 }>()
 
 function onCandidateMoved(candidateId: string, newStatusId: string) {
   emit('candidate-moved', candidateId, newStatusId)
+}
+
+function onCandidateDeleted(candidateId: string) {
+  emit('candidate-deleted', candidateId)
 }
 </script>
 
@@ -26,6 +31,7 @@ function onCandidateMoved(candidateId: string, newStatusId: string) {
       :status="status"
       :candidates="candidatesByStatus[status.id] || []"
       @candidate-moved="onCandidateMoved"
+      @candidate-deleted="onCandidateDeleted"
     />
   </div>
 </template>
