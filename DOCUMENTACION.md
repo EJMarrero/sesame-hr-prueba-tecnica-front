@@ -392,6 +392,65 @@ El endpoint PUT devuelve error 500 al intentar actualizar un candidato con datos
 
 ---
 
+## Sistema de Temas (Colores)
+
+### Configuración
+
+Los colores del diseño Figma están centralizados en `src/style.css` usando la directiva `@theme` de Tailwind v4:
+
+```css
+@theme {
+  /* Color principal de Sesame HR */
+  --color-sesame-primary: #6C63FF;
+
+  /* Colores de estados del Kanban */
+  --color-sesame-status-nuevo: #22C55F;
+  --color-sesame-status-proceso: #2CB8A6;
+  --color-sesame-status-oferta: #AD46FF;
+  --color-sesame-status-seleccionado: #10B981;
+  --color-sesame-status-descartado: #F82C37;
+}
+```
+
+### Uso en Componentes
+
+Los colores se usan como clases de Tailwind:
+
+```html
+<!-- Backgrounds -->
+<div class="bg-sesame-primary">...</div>
+<div class="bg-sesame-status-nuevo">...</div>
+
+<!-- Textos -->
+<span class="text-sesame-primary">...</span>
+<span class="text-sesame-status-descartado">...</span>
+
+<!-- Con opacidad -->
+<div class="bg-sesame-primary/10">...</div>
+```
+
+### Colores Extraídos del Figma
+
+| Variable | Hex | Uso |
+|----------|-----|-----|
+| `sesame-primary` | `#6C63FF` | Botones, tabs activos, enlaces |
+| `sesame-status-nuevo` | `#22C55F` | Columna "Nuevo" |
+| `sesame-status-proceso` | `#2CB8A6` | Columna "En proceso" |
+| `sesame-status-oferta` | `#AD46FF` | Columna "Oferta" |
+| `sesame-status-seleccionado` | `#10B981` | Columna "Seleccionado" |
+| `sesame-status-descartado` | `#F82C37` | Columna "Descartado" |
+
+### Componentes que Usan el Tema
+
+| Componente | Clases utilizadas |
+|------------|-------------------|
+| `Button.vue` | `bg-sesame-primary` |
+| `TabBar.vue` | `text-sesame-primary`, `border-sesame-primary` |
+| `Sidebar.vue` | `text-sesame-primary`, `bg-sesame-primary/10` |
+| `StatusColumn.vue` | `bg-sesame-status-*`, `text-sesame-status-*` |
+
+---
+
 ## Decisiones Técnicas
 
 ### 1. Pinia sobre Vuex
