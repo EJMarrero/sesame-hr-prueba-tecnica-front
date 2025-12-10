@@ -111,8 +111,6 @@ export const useVacancyStore = defineStore('vacancy', () => {
     const candidate = candidates.value.find((c) => c.id === candidateId)
     if (!candidate) return
 
-    const oldStatusId = candidate.statusId
-
     // Optimistic update en Pinia
     candidate.statusId = newStatusId
 
