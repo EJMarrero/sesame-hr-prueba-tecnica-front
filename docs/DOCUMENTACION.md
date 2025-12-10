@@ -222,7 +222,7 @@ Componentes Vue organizados por función.
 
 | Componente | Descripción |
 |------------|-------------|
-| `VacancyView.vue` | Vista principal con tabs, búsqueda y tablero Kanban |
+| `RecruitmentView.vue` | Vista principal con tabs, búsqueda y tablero Kanban |
 | `CandidatesView.vue` | Vista de tabla con listado de todos los candidatos |
 
 ---
@@ -328,7 +328,7 @@ src/
 │   │   └── forms/
 │   │       └── CandidateForm.vue
 │   └── views/
-│       ├── VacancyView.vue
+│       ├── RecruitmentView.vue
 │       └── CandidatesView.vue
 │
 ├── App.vue
@@ -406,7 +406,7 @@ El endpoint PUT devuelve error 500 al intentar actualizar un candidato con datos
 - Input de búsqueda en `SearchBar.vue`
 - Filtrado en frontend por `firstName + lastName` (case-insensitive)
 - Funciona tanto en vista Kanban como en vista de tabla
-- `filteredCandidatesByStatus` computed en `VacancyView.vue`
+- `filteredCandidatesByStatus` computed en `RecruitmentView.vue`
 - `filteredCandidates` computed en `CandidatesView.vue`
 
 ### 6. Vista de Candidatos (Tabla)
