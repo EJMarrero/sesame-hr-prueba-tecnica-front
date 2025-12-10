@@ -67,7 +67,7 @@ async function handleAddCandidate(data: { firstName: string; lastName: string; s
       <Header title="Reclutamiento" />
 
       <!-- Card contenedora principal -->
-      <div class="mt-0 bg-white rounded-[44px] shadow-sm border border-gray-200 overflow-hidden">
+      <div class="mt-0 bg-white rounded-3xl shadow-sm border border-gray-200 overflow-hidden">
         <!-- Tabs -->
         <div class="px-6 pt-3">
           <TabBar :tabs="tabs" :active-tab="activeTab" @update:active-tab="activeTab = $event" />

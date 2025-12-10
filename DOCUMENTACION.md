@@ -218,6 +218,13 @@ Componentes Vue organizados por función.
 |------------|-------------|
 | `CandidateForm.vue` | Modal para crear candidatos |
 
+#### Vistas (`ui/views/`)
+
+| Componente | Descripción |
+|------------|-------------|
+| `VacancyView.vue` | Vista principal con tabs, búsqueda y tablero Kanban |
+| `CandidatesView.vue` | Vista de tabla con listado de todos los candidatos |
+
 ---
 
 ## Principios SOLID
@@ -312,17 +319,17 @@ src/
 │   │   │   ├── Sidebar.vue
 │   │   │   ├── Header.vue
 │   │   │   ├── TabBar.vue
-│   │   │   └── SearchBar.vue
+│   │   │   ├── SearchBar.vue
+│   │   │   └── MainLayout.vue
 │   │   ├── board/
 │   │   │   ├── KanbanBoard.vue
 │   │   │   ├── StatusColumn.vue
 │   │   │   └── CandidateCard.vue
 │   │   └── forms/
 │   │       └── CandidateForm.vue
-│   ├── views/
-│   │   └── VacancyView.vue
-│   └── layouts/
-│       └── MainLayout.vue
+│   └── views/
+│       ├── VacancyView.vue
+│       └── CandidatesView.vue
 │
 ├── App.vue
 ├── main.ts
@@ -389,6 +396,35 @@ El endpoint PUT devuelve error 500 al intentar actualizar un candidato con datos
 - Evento `@change` detecta cuando un candidato se añade a una columna
 - Intenta `PUT /candidates/{id}` para persistir
 - Si falla (error 500), guarda en localStorage como fallback
+- Highlight visual de la columna destino durante el drag (bg-gray-50)
+
+### 5. Búsqueda de Candidatos
+
+**Requisito adicional**: Filtrar candidatos por nombre.
+
+**Implementación**:
+- Input de búsqueda en `SearchBar.vue`
+- Filtrado en frontend por `firstName + lastName` (case-insensitive)
+- Funciona tanto en vista Kanban como en vista de tabla
+- `filteredCandidatesByStatus` computed en `VacancyView.vue`
+- `filteredCandidates` computed en `CandidatesView.vue`
+
+### 6. Vista de Candidatos (Tabla)
+
+**Implementación**:
+- Tab "Candidatos" muestra listado en formato tabla
+- Componente `CandidatesView.vue` separado (Single Responsibility)
+- Columnas: Nombre, Estado, Fecha de creación
+- Comparte estado con Kanban via Pinia store
+- Filtrado de búsqueda compartido
+
+### 7. Sidebar Colapsable
+
+**Implementación**:
+- Sección "ADMINISTRADOR" colapsable
+- Sección "Talento" colapsable con animación de chevron
+- Ancho fijo de 288px (`w-72 min-w-72 max-w-72`)
+- Indicador visual de sección activa ("Reclutamiento")
 
 ---
 
@@ -406,8 +442,8 @@ Los colores del diseño Figma están centralizados en `src/style.css` usando la 
   /* Colores de estados del Kanban */
   --color-sesame-status-nuevo: #22C55F;
   --color-sesame-status-proceso: #2CB8A6;
-  --color-sesame-status-oferta: #AD46FF;
-  --color-sesame-status-seleccionado: #10B981;
+  --color-sesame-status-oferta: #3B82F6;
+  --color-sesame-status-seleccionado: #8B5CF6;
   --color-sesame-status-descartado: #F82C37;
 }
 ```
@@ -434,11 +470,11 @@ Los colores se usan como clases de Tailwind:
 | Variable | Hex | Uso |
 |----------|-----|-----|
 | `sesame-primary` | `#6C63FF` | Botones, tabs activos, enlaces |
-| `sesame-status-nuevo` | `#22C55F` | Columna "Nuevo" |
-| `sesame-status-proceso` | `#2CB8A6` | Columna "En proceso" |
-| `sesame-status-oferta` | `#AD46FF` | Columna "Oferta" |
-| `sesame-status-seleccionado` | `#10B981` | Columna "Seleccionado" |
-| `sesame-status-descartado` | `#F82C37` | Columna "Descartado" |
+| `sesame-status-nuevo` | `#22C55F` | Columna "Nuevo" (verde) |
+| `sesame-status-proceso` | `#2CB8A6` | Columna "En proceso" (turquesa) |
+| `sesame-status-oferta` | `#3B82F6` | Columna "Oferta" (azul) |
+| `sesame-status-seleccionado` | `#8B5CF6` | Columna "Seleccionado" (violeta) |
+| `sesame-status-descartado` | `#F82C37` | Columna "Descartado" (rojo) |
 
 ### Componentes que Usan el Tema
 

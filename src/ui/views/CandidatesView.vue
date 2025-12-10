@@ -41,7 +41,7 @@ function formatDate(dateString: string): string {
     <div v-else-if="filteredCandidates.length === 0" class="text-center py-12 text-gray-500">
       {{ searchQuery ? 'No se encontraron candidatos' : 'No hay candidatos registrados' }}
     </div>
-    <div v-else class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div v-else class="mb-4 bg-white rounded-lg border border-gray-200 overflow-hidden">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
