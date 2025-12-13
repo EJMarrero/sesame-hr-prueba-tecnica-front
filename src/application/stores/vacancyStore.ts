@@ -118,6 +118,7 @@ export const useVacancyStore = defineStore('vacancy', () => {
       await updateCandidateStatusUseCase.execute(candidateId, {
         firstName: candidate.firstName,
         lastName: candidate.lastName,
+        phone: candidate.phone ?? '',
         vacancyId: candidate.vacancyId,
         statusId: newStatusId,
       })

@@ -132,7 +132,7 @@ La API es la **fuente de verdad**. Los modelos del dominio se diseñaron para re
 
 ### POST /recruitment/v1/candidates
 
-**Campos requeridos (según documentación):**
+**Campos requeridos (según requisitos de la prueba):**
 ```json
 {
   "firstName": "string",
@@ -142,13 +142,13 @@ La API es la **fuente de verdad**. Los modelos del dominio se diseñaron para re
 }
 ```
 
-**Estado: ✅ Funciona**
+**Estado: ✅ Funciona** (Asumiendo que el backend interpreta un statusId inválido como procesable: error 422 - ver [REVIEW_SWAGGER.md](./REVIEW_SWAGGER.md))
 
 ---
 
 ### PUT /recruitment/v1/candidates/{candidateId}
 
-**Campos requeridos (según documentación):**
+**Campos requeridos (según requisitos de la prueba):**
 ```json
 {
   "firstName": "string",

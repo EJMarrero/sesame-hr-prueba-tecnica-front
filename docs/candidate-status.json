@@ -1,0 +1,53 @@
+
+curl -s "https://api-test.sesametime.com/recruitment/v1/candidate-status/2fd59040-bce0-498e-b8fa-101621138da6" \
+    -H "Authorization: Bearer cf3851069b6ad0c13f365cda737b71e349c2ee94a9203d07930c23009eaeafdc"
+{
+  "data": [
+    {
+      "id": "91b56d6d-eaf1-4f3c-b394-f07eabb06fe0",
+      "name": "Nuevo",
+      "order": 1,
+      "companyId": "7ae449bc-620c-4851-9d56-d25ff4094e34",
+      "createdAt": "2025-12-10T09:37:12+00:00",
+      "updatedAt": "2025-12-10T09:37:27+00:00",
+      "vacancyId": "2fd59040-bce0-498e-b8fa-101621138da6"
+    },
+    {
+      "id": "5644397e-82be-4398-bd05-f702c9ce7f38",
+      "name": "En proceso",
+      "order": 2,
+      "companyId": "7ae449bc-620c-4851-9d56-d25ff4094e34",
+      "createdAt": "2025-12-10T09:37:12+00:00",
+      "updatedAt": "2025-12-10T09:37:27+00:00",
+      "vacancyId": "2fd59040-bce0-498e-b8fa-101621138da6"
+    },
+    {
+      "id": "3c6722f3-9704-4ad7-b91d-b6ccdb373be0",
+      "name": "Oferta",
+      "order": 3,
+      "companyId": "7ae449bc-620c-4851-9d56-d25ff4094e34",
+      "createdAt": "2025-12-10T09:37:12+00:00",
+      "updatedAt": "2025-12-10T09:37:27+00:00",
+      "vacancyId": "2fd59040-bce0-498e-b8fa-101621138da6"
+    },
+    {
+      "id": "01b4d054-8912-4059-8f6e-edbb1b8a3353",
+      "name": "Seleccionado",
+      "order": 4,
+      "companyId": "7ae449bc-620c-4851-9d56-d25ff4094e34",
+      "createdAt": "2025-12-10T09:37:12+00:00",
+      "updatedAt": "2025-12-10T09:37:27+00:00",
+      "vacancyId": "2fd59040-bce0-498e-b8fa-101621138da6"
+    },
+    {
+      "id": "bdb1aaf3-a86b-43eb-874a-72936aed918b",
+      "name": "Descartado",
+      "order": 5,
+      "companyId": "7ae449bc-620c-4851-9d56-d25ff4094e34",
+      "createdAt": "2025-12-10T09:37:12+00:00",
+      "updatedAt": "2025-12-10T09:37:27+00:00",
+      "vacancyId": "2fd59040-bce0-498e-b8fa-101621138da6"
+    }
+  ],
+  "meta": { "currentPage": 1, "lastPage": 1, "total": 5, "perPage": 20 }
+}

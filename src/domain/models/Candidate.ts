@@ -2,6 +2,7 @@ export interface Candidate {
   id: string
   firstName: string
   lastName: string
+  phone?: string
   vacancyId: string
   statusId: string
   createdAt: string
@@ -29,6 +30,7 @@ export interface CreateCandidateDTO {
 export interface UpdateCandidateDTO {
   firstName: string
   lastName: string
+  phone: string
   vacancyId: string
   statusId: string
 }
